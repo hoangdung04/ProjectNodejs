@@ -1,0 +1,44 @@
+extends ../../layouts/default.pug
+
+block main
+  .product-detail
+    if (product.title)
+      h1(class="inner-title") #{product.title}
+
+    if (product.price)
+      div(class="inner-item price") Giá: <b>#{product.price}$</b>
+
+    if (product.discountPercentage)
+      div(class="inner-item discount") Giảm giá: <b>#{product.discountPercentage}%</b>
+
+    if (product.stock)
+      div(class="inner-item") Còn lại: <b>#{product.stock}</b>
+
+    if (product.thumbnail)
+      div(class="inner-item")
+        img(
+          src=product.thumbnail
+        )
+
+    if (product.status)
+      div(class="inner-item")
+        span Trạng thái: 
+        if (product.status === "active")
+          span(class="badge badge-success") Hoạt động
+        else
+          span(class="badge badge-danger") Dừng hoạt động
+
+    if (product.position)
+      div(class="inner-item") Vị trí: <b>#{product.position}</b>
+
+    if (product.description)
+      div(class="inner-desc")
+        h3 Mô tả sản phẩm
+        div !{product.description}
+
+    a(
+      href=`${prefixAdmin}/products/edit/${product.id}`
+      class="btn btn-warning"
+    ) Chỉnh sửa
+
+  script(src="/admin/js/product.js")
