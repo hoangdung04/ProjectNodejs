@@ -1,0 +1,27 @@
+extends ../../layouts/default.pug
+include ../../mixin/box-head.pug
+
+block main
+  .container.my-3
+    .row
+      .col-12
+        +box-head("Chi tiết sản phẩm")
+
+    .row
+      .col-6
+        .inner-thumb
+          img(src=product.thumbnail, alt=product.title, style="width: 100%")
+      .col-6
+        h1.inner-title #{product.title}
+        
+        if (product.price)
+          div.inner-price Giá: <b>#{product.price}$</b>
+
+        if (product.discountPercentage)
+          div.inner-percent Giảm giá: <b>#{product.discountPercentage}%</b>
+
+        if (product.stock)
+          div.inner-stock Còn lại: <b>#{product.stock}</b> sản phẩm
+
+        if (product.description)
+          div.inner-desc !{product.description}
