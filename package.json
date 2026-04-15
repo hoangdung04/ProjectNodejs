@@ -11,17 +11,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@types/cors": "^2.8.19",
     "body-parser": "^2.2.2",
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-flash": "^0.0.2",
     "express-session": "^1.19.0",
     "method-override": "^2.0.0",
+    "mongodb": "^7.1.1",
     "mongoose": "^9.3.1",
     "mongoose-slug-updater": "^3.3.0",
     "multer": "^2.1.1",
-    "pug": "^3.0.4"
+    "pug": "^3.0.4",
+    "tinymce": "^8.4.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

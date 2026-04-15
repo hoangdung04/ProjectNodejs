@@ -21,7 +21,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 // 1. Cấu hình View Engine (Pug)
-app.set('views', './views');
+app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
 
 // 2. Các biến toàn cục cho file Pug
@@ -45,6 +45,10 @@ app.use(session({
   cookie: { maxAge: 60000 }
 }));
 app.use(flash());
+// TinyMCE
+var path = require('path');
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 // 5. Routes (Phải nằm SAU các middleware cấu hình ở trên)
 route(app); 
 adminRoute(app);

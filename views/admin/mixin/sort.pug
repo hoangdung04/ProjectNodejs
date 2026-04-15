@@ -1,0 +1,21 @@
+mixin sortMixin()
+ div(sort)
+        .col-4
+            select(
+              class="form-control"
+              name="sort"
+              sort-select
+            )
+              option(value="position-asc" ) Vị trí (Tăng dần)
+              option(value="position-desc") Vị trí (Giảm dần)
+              option(value="price-asc" ) Giá tiền (Tăng dần)
+              option(value="price-desc" ) Giá tiền (Giảm dần)
+              option(value="title-asc" selected = true) Tiêu đề (A-Z)
+              option(value="title-desc") Tiêu đề (Z-A)
+        .col-8
+          button(
+            class="btn btn-danger btn-sm btn-clear-sort"
+            sort-clear
+          ) 
+            span x
+            |  Clear

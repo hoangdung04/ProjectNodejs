@@ -4,6 +4,7 @@ include ../../mixin/search.pug
 include ../../mixin/pagination.pug
 include ../../mixin/form-change-multi.pug
 include ../../mixin/alert.pug
+include ../../mixin/sort.pug
 block main
   h1 Trang danh sách sản phẩm
 
@@ -19,13 +20,19 @@ block main
         .col-6
           +searchMixin(keyword)
   .card.mb-3
+    .card-header Sắp xếp
+    .card-body  
+      .row
+        +sortMixin()
+  .card.mb-3
     .card-header Danh sách sản phẩm
     .card-body
-     .row 
-      .col-8
-        +formChangeMulti(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-      .col-4
-        a(href=`${prefixAdmin}/products/create` class="btn btn-primary") + Thêm mới
+      .row 
+        .col-8
+          +formChangeMulti(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .col-4
+          a(href=`${prefixAdmin}/products/create` class="btn btn-primary") + Thêm mới
+
       table(
         class="table table-bordered table-hover"
         checkbox-multi
@@ -52,7 +59,7 @@ block main
               td #{item.title}
               td #{item.price}$
               td 
-                input(type="number", name="position", min="1", value=item.position, class="form-control-sm",style="width: 40px;")
+                input(type="number", name="position", min="1", value=item.position, class="form-control-sm", style="width: 40px;")
               td 
                 if (item.status == "active")
                   a(href="javascript:;" class="badge badge-success" button-change-status data-id=item.id data-status=item.status) Hoạt động
@@ -61,7 +68,7 @@ block main
               td
                 a(href=`${prefixAdmin}/products/detail/${item.id}` class="btn btn-info btn-sm") Chi tiết
                 a(href=`${prefixAdmin}/products/edit/${item.id}` class="btn btn-warning btn-sm") Sửa
-                button(class="btn btn-danger btn-sm.ml-1" button-delete data-id=item.id) Xóa
+                button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
 
   +paginationMixin(pagination)
   form(action="" method="POST" id="form-change-status" data-path=`${prefixAdmin}/products/change-status`)

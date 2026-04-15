@@ -27,8 +27,15 @@ module.exports.index = async (req, res) => {
     limitItems: 4
   };
   objectPagination = paginationHelper(objectPagination, req.query, countProducts);
- 
-  const products = await Product.find(find).sort({position: "asc"}).skip(objectPagination.skip).limit(objectPagination.limitItems);
+  // Sắp xếp
+  let sort = {};
+  if(req.query.sortKey && req.query.sortValue){
+    sort[req.query.sortKey] = req.query.sortValue;
+  }else{
+    sort.position = "asc";
+  }
+  //end Sắp xếp
+  const products = await Product.find(find).sort(sort).skip(objectPagination.skip).limit(objectPagination.limitItems);
   res.render("admin/pages/products/index.pug", {
     pageTitle: "Danh sách sản phẩm",
     products: products,

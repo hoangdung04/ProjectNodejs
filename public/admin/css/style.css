@@ -623,3 +623,70 @@ form[form-change-multi] button.btn-sm:hover {
   font-weight: 600;
   border-radius: 8px;
 }
+
+/* Phần Sắp xếp (Sort Professional) */
+div[sort] {
+  position: relative;
+  width: 100%;
+}
+
+div[sort] select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%; /* Chỉnh lại thành 100% để lấp đầy col-4 */
+  max-width: 280px;
+  height: 38px;
+  padding: 0 35px 0 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+}
+
+div[sort] select:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+div[sort] select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.15);
+}
+
+.btn-clear-sort {
+  height: 38px;
+  padding: 0 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #fee2e2;
+  color: #ef4444;
+  border: 1px solid #fca5a5;
+  transition: all 0.2s ease;
+}
+
+.btn-clear-sort:hover {
+  background-color: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.2);
+}
+
+.btn-clear-sort span {
+  font-size: 14px;
+  margin-top: -2px;
+}
