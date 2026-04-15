@@ -11,7 +11,7 @@ module.exports.index = async (req, res) => {
   let find = {
     deleted: false
   };
-  if(req.query.status){
+  if (req.query.status) {
     find.status = req.query.status;
   }
   // Tìm kiếm
@@ -29,9 +29,9 @@ module.exports.index = async (req, res) => {
   objectPagination = paginationHelper(objectPagination, req.query, countProducts);
   // Sắp xếp
   let sort = {};
-  if(req.query.sortKey && req.query.sortValue){
+  if (req.query.sortKey && req.query.sortValue) {
     sort[req.query.sortKey] = req.query.sortValue;
-  }else{
+  } else {
     sort.position = "asc";
   }
   //end Sắp xếp
@@ -43,14 +43,18 @@ module.exports.index = async (req, res) => {
     keyword: objectSearch.keyword,
     pagination: objectPagination
   });
-} 
+}
 
 // [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
-  await Product.updateOne({_id: id}, {status: status});
-   req.flash('success', 'Cập nhật trạng thái thành công');
+  await Product.updateOne({
+    _id: id
+  }, {
+    status: status
+  });
+  req.flash('success', 'Cập nhật trạng thái thành công');
   res.redirect(req.get('Referer') || `${req.app.locals.prefixAdmin}/products`);
 }
 
@@ -60,25 +64,48 @@ module.exports.changeMulti = async (req, res) => {
   const status = req.body.status;
   const ids = req.body.ids.split(",");
 
-  switch(status){
+  switch (status) {
     case "active":
-      await Product.updateMany({_id: {$in: ids}}, {status: "active"});
+      await Product.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        status: "active"
+      });
       req.flash('success', `Cập nhật trạng thái của ${ids.length} sản phẩm thành công`);
       break;
     case "notWorking":
-      await Product.updateMany({_id: {$in: ids}}, {status: "notWorking"});
+      await Product.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        status: "notWorking"
+      });
       req.flash('success', `Cập nhật trạng thái của ${ids.length} sản phẩm thành công`);
       break;
     case "deleted-all":
-      await Product.updateMany({_id: {$in: ids}}, {deleted: true, deletedAt: new Date()});
+      await Product.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        deleted: true,
+        deletedAt: new Date()
+      });
       req.flash('success', `Xóa ${ids.length} sản phẩm thành công`);
       break;
     case "change-position":
       for (const item of ids) {
-        let[id,position] =item.split("-");
+        let [id, position] = item.split("-");
         position = parseInt(position);
-        await Product.updateOne({_id: id}, {position : position});
-      }  
+        await Product.updateOne({
+          _id: id
+        }, {
+          position: position
+        });
+      }
       req.flash('success', `Thay đổi vị trí của ${ids.length} sản phẩm thành công`);
       break;
   }
@@ -89,7 +116,12 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteProduct = async (req, res) => {
   const id = req.params.id;
   // await Product.deleteOne({_id: id});
-  await Product.updateOne({_id: id}, {deleted: true, deletedAt: new Date()});
+  await Product.updateOne({
+    _id: id
+  }, {
+    deleted: true,
+    deletedAt: new Date()
+  });
   req.flash('success', `Xóa sản phẩm thành công`);
   res.redirect(req.get('Referer') || `${req.app.locals.prefixAdmin}/products`);
 }
@@ -109,14 +141,11 @@ module.exports.createPost = async (req, res) => {
   req.body.stock = parseInt(req.body.stock) || 0;
   req.body.discountPercentage = parseInt(req.body.discountPercentage) || 0;
 
-  if(req.body.position == ""){
+  if (req.body.position == "") {
     const countProduct = await Product.countDocuments();
     req.body.position = countProduct + 1;
-  }else{
+  } else {
     req.body.position = parseInt(req.body.position);
-  }
-  if (req.file) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
   await Product.create(req.body);
   req.flash('success', 'Thêm mới sản phẩm thành công');
@@ -126,15 +155,15 @@ module.exports.createPost = async (req, res) => {
 module.exports.edit = async (req, res) => {
   try {
     const find = {
-  deleted: false,
-  _id: req.params.id
-}
-const product = await Product.findOne(find);
- 
-  res.render(`admin/pages/products/edit`, {
-    pageTitle: "Sửa sản phẩm",
-    product: product
-  });
+      deleted: false,
+      _id: req.params.id
+    }
+    const product = await Product.findOne(find);
+
+    res.render(`admin/pages/products/edit`, {
+      pageTitle: "Sửa sản phẩm",
+      product: product
+    });
   } catch (error) {
     req.flash('error', 'Không tìm thấy sản phẩm');
     res.redirect(`${req.app.locals.prefixAdmin}/products`);
@@ -153,7 +182,9 @@ module.exports.editPatch = async (req, res) => {
   if (req.file) {
     req.body.thumbnail = `/uploads/${req.file.filename}`;
   }
-  await Product.updateOne({_id: id}, req.body);
+  await Product.updateOne({
+    _id: id
+  }, req.body);
   req.flash('success', 'Cập nhật sản phẩm thành công');
   res.redirect(`${req.app.locals.prefixAdmin}/products`);
 }
@@ -161,15 +192,15 @@ module.exports.editPatch = async (req, res) => {
 module.exports.detail = async (req, res) => {
   try {
     const find = {
-  deleted: false,
-  _id: req.params.id
-}
-const product = await Product.findOne(find);
- 
-  res.render(`admin/pages/products/detail`, {
-    pageTitle: product.title,
-    product: product
-  });
+      deleted: false,
+      _id: req.params.id
+    }
+    const product = await Product.findOne(find);
+
+    res.render(`admin/pages/products/detail`, {
+      pageTitle: product.title,
+      product: product
+    });
   } catch (error) {
     req.flash('error', 'Không tìm thấy sản phẩm');
     res.redirect(`${req.app.locals.prefixAdmin}/products`);

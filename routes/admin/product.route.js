@@ -1,11 +1,11 @@
 const express = require('express');
-const multer  = require('multer')
-const storageMulter = require('../../helpers/storageMulter');
-const upload = multer({ storage: storageMulter() })
+const multer = require('multer')
+const upload = multer()
 const productRouter = express.Router();
 const productController = require('../../controllers/admin/product.controller');
 const validate = require('../../validate/admin/product.validate');
 
+const uploadCloude = require('../../middleware/admin/uploadCloud.middleware')
 // [GET] /admin/products
 productRouter.get('/', productController.index);
 
@@ -20,13 +20,13 @@ productRouter.delete('/delete-item/:id', productController.deleteProduct);
 // [GET] /admin/products/create
 productRouter.get('/create', productController.create);
 // [POST] /admin/products/create
-productRouter.post('/create', upload.single('thumbnail'), validate.createPost, productController.createPost);
+productRouter.post('/create', upload.single('thumbnail'), uploadCloude.upload, validate.createPost, productController.createPost);
 
 // [GET] /admin/products/edit/:id
 productRouter.get('/edit/:id', productController.edit);
 
 // [PATCH] /admin/products/edit/:id
-productRouter.patch('/edit/:id', upload.single('thumbnail'), validate.createPost, productController.editPatch);
+productRouter.patch('/edit/:id', upload.single('thumbnail'), uploadCloude.upload, validate.createPost, productController.editPatch);
 
 // [GET] /admin/products/detail/:id
 productRouter.get('/detail/:id', productController.detail);
