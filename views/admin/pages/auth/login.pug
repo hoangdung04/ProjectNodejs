@@ -1,0 +1,42 @@
+extends ../../layouts/auth.pug
+include ../../mixin/alert.pug
+
+block main
+  +alert-error(5000)
+
+  //- Thêm class auth-body vào thẻ body trong file layout hoặc thiết lập trực tiếp ở đây
+  .auth-wrapper
+    .login-container.mx-auto
+      .login-header
+        h1.login-title Đăng nhập
+        p.login-subtitle Quản trị viên hệ thống
+        
+      form(
+        action=`${prefixAdmin}/auth/login`
+        method="POST"
+      )
+        div(class="form-group")
+          label(for="email") Địa chỉ Email
+          input(
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="admin@example.com"
+            required
+          )
+        div(class="form-group")
+          label(for="password") Mật khẩu
+          input(
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="••••••••"
+            required
+          )
+        div(class="form-group mb-0")
+          button(
+            type="submit"
+            class="btn-login"
+          ) Đăng nhập ngay

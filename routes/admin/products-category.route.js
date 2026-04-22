@@ -16,4 +16,10 @@ productCategoryRouter.get('/create', productsCategoryController.create);
 
 // [POST] /admin/products-category/create
 productCategoryRouter.post('/create', upload.single('thumbnail'), uploadCloude.upload, validate.createPost, productsCategoryController.createPost);
+
+// [GET] /admin/products-category/edit/:id
+productCategoryRouter.get('/edit/:id', productsCategoryController.edit);
+
+// [PATCH] /admin/products-category/edit/:id
+productCategoryRouter.patch('/edit/:id', upload.single('thumbnail'), uploadCloude.upload, validate.createPost, productsCategoryController.editPost);
 module.exports = productCategoryRouter;

@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixin/alert.pug
+
+block main
+  h1(class="mb-4") Nhóm quyền
+
+  +alert-success(3000)
+  +alert-error(3000)
+
+  .card.mb-3
+    .card-header Danh sách
+    .card-body
+      .row
+        .col-8
+        .col-4.text-right
+          a(
+            href=`${prefixAdmin}/roles/create`
+            class="btn btn-outline-success"
+          ) + Thêm mới
+
+      table(class="table table-bordered table-hover")
+        thead
+          tr
+            th(class="text-center") STT
+            th(class="text-center") Tiêu đề
+            th(class="text-center") Mô tả
+            th(class="text-center") Hành động
+        tbody
+         if (roles.length > 0)
+          each role, index in roles
+            tr
+              td(class="text-center") #{index + 1}
+              td #{role.title}
+              td #{role.description}
+              td(class="text-center")
+                a(href=`${prefixAdmin}/roles/detail/${role._id}` class="btn btn-info btn-sm") Chi tiết
+                a(href=`${prefixAdmin}/roles/edit/${role._id}` class="btn btn-warning btn-sm") Sửa
+                a(href=`${prefixAdmin}/roles/delete/${role._id}` class="btn btn-danger btn-sm ml-1") Xóa

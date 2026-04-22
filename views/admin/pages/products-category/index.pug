@@ -5,6 +5,7 @@ include ../../mixin/pagination.pug
 include ../../mixin/form-change-multi.pug
 include ../../mixin/alert.pug
 include ../../mixin/sort.pug
+include ../../mixin/table-tree.pug
 block main
   h1 Danh mục sản phẩm
 
@@ -36,22 +37,4 @@ block main
             th Trạng thái
             th Hành động
         tbody
-          each item, index in productsCategory
-            tr
-              td
-                input(type="checkbox" name="id" value=item.id)
-              td #{index + 1}
-              td
-                img(src=item.thumbnail, alt=item.title, width="100px", height="auto")
-              td #{item.title}
-              td 
-                input(type="number", name="position", min="1", value=item.position, class="form-control-sm", style="width: 40px;")
-              td 
-                if (item.status == "active")
-                  a(href="javascript:;" class="badge badge-success" button-change-status data-id=item.id data-status=item.status) Hoạt động
-                else 
-                  a(href="javascript:;" class="badge badge-danger" button-change-status data-id=item.id data-status=item.status) Dừng hoạt động
-              td
-                a(href=`${prefixAdmin}/products-category/detail/${item.id}` class="btn btn-info btn-sm") Chi tiết
-                a(href=`${prefixAdmin}/products-category/edit/${item.id}` class="btn btn-warning btn-sm") Sửa
-                button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
+          +table-tree(productsCategory)
