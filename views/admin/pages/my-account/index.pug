@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+
+block main
+  h1(class="mb-4") Thông tin cá nhân
+
+  .row.justify-content-center
+    .col-12.col-lg-6
+      .card.profile-card.mb-4
+        .card-body.text-center.p-5
+          .avatar-wrapper.mb-4
+            if (user.avatar)
+              img(src=user.avatar alt="Avatar" class="profile-avatar")
+            else
+              img(src="/admin/images/avatar.png" alt="Avatar" class="profile-avatar")
+          
+          h3.profile-name.mb-2 #{user.fullName}
+          
+          if (role.title)
+            div.mb-4
+              span.badge.profile-role #{role.title}
+          
+          hr.mb-4
+
+          table.table.table-borderless.profile-table
+            tbody
+              if (user.fullName)
+                tr
+                  th.text-left Họ và tên
+                  td.text-left.font-weight-bold #{user.fullName}
+              
+              if (user.email)
+                tr
+                  th.text-left Email
+                  td.text-left #{user.email}
+              
+              if (user.phone)
+                tr
+                  th.text-left Số điện thoại
+                  td.text-left #{user.phone}
+              
+              tr
+                th.text-left Trạng thái
+                td.text-left
+                  if (user.status === "active")
+                    span.badge.badge-success Hoạt động
+                  else
+                    span.badge.badge-danger Dừng hoạt động
+
+          .mt-5
+            a(href=`${prefixAdmin}/my-account/edit` class="btn btn-primary btn-edit-profile btn-block") 
+              i.fa.fa-edit.mr-2
+              | Chỉnh sửa thông tin

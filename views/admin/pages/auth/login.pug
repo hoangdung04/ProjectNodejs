@@ -2,18 +2,18 @@ extends ../../layouts/auth.pug
 include ../../mixin/alert.pug
 
 block main
-  +alert-error(5000)
-
-  //- Thêm class auth-body vào thẻ body trong file layout hoặc thiết lập trực tiếp ở đây
   .auth-wrapper
+    +alert-error(5000)
+    +alert-success(5000)
     .login-container.mx-auto
+
       .login-header
         h1.login-title Đăng nhập
-        p.login-subtitle Quản trị viên hệ thống
-        
+
       form(
         action=`${prefixAdmin}/auth/login`
         method="POST"
+
       )
         div(class="form-group")
           label(for="email") Địa chỉ Email

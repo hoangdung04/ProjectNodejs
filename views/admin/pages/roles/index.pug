@@ -2,12 +2,13 @@ extends ../../layouts/default.pug
 include ../../mixin/alert.pug
 
 block main
-  h1(class="mb-4") Nhóm quyền
+  if(role.permissions.includes("roles_view"))
+    h1(class="mb-4") Nhóm quyền
 
-  +alert-success(3000)
-  +alert-error(3000)
+    +alert-success(3000)
+    +alert-error(3000)
 
-  .card.mb-3
+    .card.mb-3
     .card-header Danh sách
     .card-body
       .row
@@ -19,7 +20,7 @@ block main
           ) + Thêm mới
 
       table(class="table table-bordered table-hover")
-        thead
+        thead 
           tr
             th(class="text-center") STT
             th(class="text-center") Tiêu đề
@@ -36,3 +37,5 @@ block main
                 a(href=`${prefixAdmin}/roles/detail/${role._id}` class="btn btn-info btn-sm") Chi tiết
                 a(href=`${prefixAdmin}/roles/edit/${role._id}` class="btn btn-warning btn-sm") Sửa
                 a(href=`${prefixAdmin}/roles/delete/${role._id}` class="btn btn-danger btn-sm ml-1") Xóa
+  else 
+    h1 Bạn không có quyền truy cập

@@ -2,14 +2,15 @@ extends ../../layouts/default.pug
 include ../../mixin/alert.pug
 
 block main
-  h1(class="mb-4") Thêm mới nhóm quyền
+  if(role.permissions.includes("roles_create"))
+    h1(class="mb-4") Thêm mới nhóm quyền
 
-  +alert-error(3000)
+    +alert-error(3000)
 
-  form(
+    form(
     action=`${prefixAdmin}/roles/create`
     method="POST"
-  )
+    )
     div(class="form-group")
       label(for="title") Tiêu đề
       input(
@@ -32,3 +33,5 @@ block main
         type="submit"
         class="btn btn-primary"
       ) Tạo mới
+  else 
+    h1 Bạn không có quyền truy cập

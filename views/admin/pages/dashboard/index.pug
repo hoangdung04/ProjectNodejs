@@ -1,4 +1,11 @@
 extends ../../layouts/default.pug
 
 block main
-  h1 Trang tổng quan
+  h1 Trang tổng quan 
+  div #{user} 
+  div ---------------------------
+  if(role && role.permissions && role.permissions.length > 0)
+    div #{role}  
+  else
+    div Chưa có quyền
+  

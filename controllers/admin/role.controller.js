@@ -36,7 +36,7 @@ module.exports.edit = async (req, res) => {
         });
         res.render("admin/pages/roles/edit.pug", {
             pageTitle: "Sửa vai trò",
-            role: role
+            record: role
         });
     } catch (error) {
         req.flash('error', 'Không tìm thấy vai trò');

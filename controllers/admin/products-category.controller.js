@@ -29,15 +29,22 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
-  if (req.body.position == "") {
-    const countProduct = await ProductsCategory.countDocuments();
-    req.body.position = countProduct + 1;
-  } else {
-    req.body.position = parseInt(req.body.position);
+  try {
+    if (!req.body.position) {
+      const countProduct = await ProductsCategory.countDocuments();
+      req.body.position = countProduct + 1;
+    } else {
+      req.body.position = parseInt(req.body.position);
+    }
+    const productsCategory = new ProductsCategory(req.body);
+    await productsCategory.save();
+    req.flash('success', 'Tạo danh mục sản phẩm thành công');
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  } catch (error) {
+    console.error("CREATE CATEGORY ERROR:", error);
+    req.flash('error', `Lỗi tạo danh mục: ${error.message}`);
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
   }
-  const productsCategory = new ProductsCategory(req.body);
-  await productsCategory.save();
-  res.redirect(`${systemConfig.prefixAdmin}/products-category`);
 }
 
 // [GET] /admin/products-category/edit/:id

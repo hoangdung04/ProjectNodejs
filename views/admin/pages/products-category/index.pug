@@ -8,33 +8,36 @@ include ../../mixin/sort.pug
 include ../../mixin/table-tree.pug
 block main
   h1 Danh mục sản phẩm
+  if(role.permissions.includes("products-category_view"))
 
-  .card.mb-3
-    +alert-success(3000)
-    +alert-error(3000)  
-    .card-header Danh sách
-    .card-body
-      .row
-        .col-8
-        .col-4.text-right
-          a(
-            href=`${prefixAdmin}/products-category/create`
-            class="btn btn-outline-success"
-          ) + Thêm mới
+    .card.mb-3
+      +alert-success(3000)
+      +alert-error(3000)  
+      .card-header Danh sách
+      .card-body
+        .row
+          .col-8
+          .col-4.text-right
+              a(
+                href=`${prefixAdmin}/products-category/create`
+                class="btn btn-outline-success"
+              ) + Thêm mới
 
-      table(
-        class="table table-bordered table-hover"
-        checkbox-multi
-      )
-        thead
-          tr
-            th
-              input(type="checkbox" name="checkall" class="checkall")
-            th STT
-            th Ảnh
-            th Tên
-            th Vị trí
-            th Trạng thái
-            th Hành động
-        tbody
-          +table-tree(productsCategory)
+        table(
+          class="table table-bordered table-hover"
+          checkbox-multi
+        )
+          thead
+            tr
+              th
+                input(type="checkbox" name="checkall" class="checkall")
+              th STT
+              th Ảnh
+              th Tên
+              th Vị trí
+              th Trạng thái
+              th Hành động
+          tbody
+            +table-tree(productsCategory)
+  else 
+    h1 Bạn không có quyền truy cập

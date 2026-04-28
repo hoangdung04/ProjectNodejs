@@ -1,4 +1,4 @@
-const Account = require('../../models/account');
+const Account = require('../../models/account.model');
 
 module.exports.createPost = async (req, res, next) => {
 

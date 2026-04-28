@@ -1,9 +1,10 @@
-const express = require('express'); 
+const express = require('express');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const flash = require('express-flash');
+const moment = require('moment');
 require('dotenv').config();
 
 // Config / Database
@@ -26,15 +27,18 @@ app.set('view engine', 'pug');
 
 // 2. Các biến toàn cục cho file Pug
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 // 3. Thư mục file tĩnh (CSS, JS, Hình ảnh)
-app.use(express.static('./public'));
+app.use(express.static(`${__dirname}/public`));
 
 // 4. Các Middleware cấu hình
 // Cấu hình Method Override (Để dùng PATCH, DELETE...)
 app.use(methodOverride('_method'));
 // Cấu hình Body-Parser (Để đọc dữ liệu từ form gửi lên)
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 // Flash & Session
 app.use(cookieParser('keyboard cat'));
@@ -42,7 +46,9 @@ app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: {
+    maxAge: 60000
+  }
 }));
 app.use(flash());
 // TinyMCE
@@ -50,10 +56,10 @@ var path = require('path');
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 // 5. Routes (Phải nằm SAU các middleware cấu hình ở trên)
-route(app); 
+route(app);
 adminRoute(app);
 
 // 6. Lắng nghe server
 app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server is running at http://localhost:${PORT}`);
 });

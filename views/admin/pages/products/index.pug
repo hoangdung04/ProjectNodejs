@@ -5,8 +5,10 @@ include ../../mixin/pagination.pug
 include ../../mixin/form-change-multi.pug
 include ../../mixin/alert.pug
 include ../../mixin/sort.pug
+include ../../mixin/moment.pug
 block main
-  h1 Trang danh sách sản phẩm
+ if(role.permissions.includes("products_view"))
+  
 
   +alert-success(5000)
   +alert-error(5000)
@@ -31,7 +33,7 @@ block main
         .col-8
           +formChangeMulti(`${prefixAdmin}/products/change-multi?_method=PATCH`)
         .col-4
-          a(href=`${prefixAdmin}/products/create` class="btn btn-primary") + Thêm mới
+           a(href=`${prefixAdmin}/products/create` class="btn btn-primary") + Thêm mới
 
       table(
         class="table table-bordered table-hover"
@@ -47,6 +49,8 @@ block main
             th Giá
             th Vị trí
             th Trạng thái
+            th Người tạo
+            th Người cập nhật
             th Hành động
         tbody
           each item, index in products
@@ -62,16 +66,29 @@ block main
                 input(type="number", name="position", min="1", value=item.position, class="form-control-sm", style="width: 40px;")
               td 
                 if (item.status == "active")
-                  a(href="javascript:;" class="badge badge-success" button-change-status data-id=item.id data-status=item.status) Hoạt động
+                    a(href="javascript:;" class="badge badge-success" button-change-status data-id=item.id data-status=item.status) Hoạt động
                 else 
-                  a(href="javascript:;" class="badge badge-danger" button-change-status data-id=item.id data-status=item.status) Dừng hoạt động
+                    a(href="javascript:;" class="badge badge-danger" button-change-status data-id=item.id data-status=item.status) Dừng hoạt động
+              td 
+               if(item.accountFullName)
+                p #{item.accountFullName} 
+                +formatDate(item.createdAt)
+              td
+                if(item.updateBy && item.updateBy.length > 0)
+                 p #{item.updateBy.slice(-1)[0].accountFullName} 
+                 +formatDate(item.updateBy.slice(-1)[0].updateAt)
+                else
+                  p Chưa cập nhật
               td
                 a(href=`${prefixAdmin}/products/detail/${item.id}` class="btn btn-info btn-sm") Chi tiết
                 a(href=`${prefixAdmin}/products/edit/${item.id}` class="btn btn-warning btn-sm") Sửa
-                button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
+                if(role.permissions.includes("products_delete"))
+                  button(class="btn btn-danger btn-sm ml-1" button-delete data-id=item.id) Xóa
 
   +paginationMixin(pagination)
   form(action="" method="POST" id="form-change-status" data-path=`${prefixAdmin}/products/change-status`)
 
   form(action="" method="POST" id="form-delete-item" data-path=`${prefixAdmin}/products/delete-item`)
   script(src="/admin/js/product.js")
+ if(!role.permissions.includes("products_view"))
+    h1 Bạn không có quyền truy cập

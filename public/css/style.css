@@ -14,29 +14,111 @@
     width: auto;
 }
 
-/* Chỉnh menu ngang */
-.header .inner-menu ul {
+/* Chỉnh menu ngang (Chỉ cấp 1) */
+.header .inner-menu > ul {
     list-style: none; 
     padding: 0;
     margin: 0;
-    display: flex; /* Dàn hàng ngang */
-    justify-content: flex-end; /* Căn lề phải */
+    display: flex; 
+    justify-content: flex-end; 
     align-items: center;
-    gap: 30px; /* Khoảng cách giữa các menu */
+    gap: 30px; 
 }
 
-/* Chỉnh link menu */
-.header .inner-menu ul li a {
+/* Các link cấp 1 */
+.header .inner-menu > ul > li > a {
     text-decoration: none;
-    color: #333333; /* Màu đen xám */
-    font-weight: 500; /* Bớt in đậm đi một chút */
-    font-size: 14px; /* Chữ nhỏ lại */
-    transition: all 0.3s ease; /* Hiệu ứng mượt mà khi di chuột */
+    color: #333333; 
+    font-weight: 600; 
+    font-size: 15px; 
+    transition: all 0.3s ease; 
+    padding: 15px 0;
+    display: block;
 }
 
-/* Hiệu ứng khi hover (di chuột) vào menu */
-.header .inner-menu ul li a:hover {
-    color: #007bff; /* Đổi màu xanh dương */
+.header .inner-menu > ul > li > a:hover {
+    color: #007bff; 
+}
+
+/* ==== MULTI-LEVEL DROPDOWN MENU PRO ==== */
+.header .inner-menu li {
+    position: relative;
+}
+
+/* Ẩn các menu con */
+.header .inner-menu ul ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 220px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 100;
+    list-style: none;
+    margin: 0;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Menu con cấp 3, 4 trở đi (vì menu gốc nằm bên phải nên phải mở sang TRÁI để không bị khuất màn hình) */
+.header .inner-menu ul ul ul {
+    top: -1px;
+    right: 100%;
+    left: auto;
+    margin-right: 0;
+}
+
+/* Hiển thị menu khi di chuột */
+.header .inner-menu li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Style cho các link trong menu con */
+.header .inner-menu ul ul li a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.header .inner-menu ul ul li a:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+    padding-right: 26px; /* Đổi padding sang phải vì menu sẽ bay sang trái */
+    padding-left: 20px;
+}
+
+/* Thêm icon mũi tên cho các mục có sub-menu */
+.header .inner-menu .sub-menu > a::after {
+    content: '\25BC'; /* Mũi tên trỏ xuống */
+    font-size: 9px;
+    margin-left: 8px;
+    display: inline-block;
+    transition: transform 0.3s;
+}
+
+.header .inner-menu ul ul .sub-menu > a::after {
+    content: '\25C0'; /* Mũi tên trỏ TRÁI vì menu sẽ mở sang trái */
+}
+
+.header .inner-menu li:hover > a::after {
+    transform: rotate(180deg);
+}
+
+.header .inner-menu ul ul li:hover > a::after {
+    transform: translateX(-4px); /* Trượt nhẹ mũi tên sang trái */
 }
 
 
