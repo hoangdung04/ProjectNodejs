@@ -206,6 +206,42 @@
     z-index: 10;
 }
 
+/* Nhãn Sản phẩm Nổi Bật (Pro Style) */
+.product-item .inner-featured {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+.product-item .inner-featured span {
+    display: inline-block;
+    background: linear-gradient(135deg, #FFaa00, #FF3300); /* Gradient cam - đỏ lửa */
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px; /* Bo tròn dạng viên thuốc */
+    box-shadow: 0 4px 12px rgba(255, 51, 0, 0.4); /* Bóng màu đỏ nổi bật */
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: pulseFeatured 2s infinite; /* Hiệu ứng tỏa sáng liên tục */
+}
+
+/* Hiệu ứng nhịp đập tỏa sáng cho nhãn Nổi Bật */
+@keyframes pulseFeatured {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 51, 0, 0.5);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 51, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 51, 0, 0);
+    }
+}
+
 /* Vùng Thông tin (Tên + Giá) */
 .product-info {
     padding: 24px 20px;

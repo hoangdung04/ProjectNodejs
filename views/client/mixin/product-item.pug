@@ -1,0 +1,17 @@
+mixin productItem(item) 
+    .col-4.mb-3
+      .product-item
+        .product-image
+          a(href=`/products/${item.slug}`)
+            img(src=item.thumbnail, alt="Product")
+          
+            .inner-discount -#{item.discountPercentage}%
+          
+          if item.featured == "1" 
+            .inner-featured <span>Nổi bật</span>
+        .product-info
+          h3.product-title 
+            a(href=`/products/${item.slug}`) #{item.title}
+          p.product-price #{item.priceNew}$
+          p.product-price-old #{item.price}$
+          a(href=`/products/${item.slug}`).product-btn Mua hàng

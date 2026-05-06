@@ -1,0 +1,4 @@
+include product-item.pug
+mixin productLayout(products)    
+  each item in products
+    +productItem(item)

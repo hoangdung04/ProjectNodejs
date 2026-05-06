@@ -29,6 +29,12 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admin/products-category/create
 module.exports.createPost = async (req, res) => {
+  const permissions = res.locals.role.permissions;
+  if (!permissions.includes("product-categories_create")) {
+    req.flash("error", "Không có quyền tạo danh mục");
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+    return;
+  }
   try {
     if (!req.body.position) {
       const countProduct = await ProductsCategory.countDocuments();
